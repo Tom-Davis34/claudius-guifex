@@ -1,4 +1,4 @@
-# ui-component-tdd
+# Claudius Guifex
 
 A Claude Code plugin that enforces a **design-first TDD workflow** for React UI components. You write a spec and static mockups before any code, a design-review gate keeps you honest before you write tests, and a fidelity gate confirms the rendered component matches its mockups before you call it done.
 
@@ -6,7 +6,7 @@ A Claude Code plugin that enforces a **design-first TDD workflow** for React UI 
 
 ## 1. What it is
 
-`ui-component-tdd` adds six skills and one command to Claude Code — two of
+`claudius-guifex` adds six skills and one command to Claude Code — two of
 the skills are a renderer-specific pair (Storybook or Playwright) selected
 via config for the PREVIEW phase and Gate 2. Together they structure the
 full component lifecycle into seven ordered phases with two mandatory human
@@ -21,22 +21,32 @@ the phases is explicitly rejected by the skills.
 Run these two commands inside Claude Code (in any repo or globally):
 
 ```
-/plugin marketplace add Tom-Davis34/ui-component-tdd
-/plugin install ui-component-tdd@tomdavis
+/plugin marketplace add Tom-Davis34/claudius-guifex
+/plugin install claudius-guifex@tomdavis
 ```
 
 **Scope notes:**
 - **User scope** (default): the plugin is available globally across all repos on this machine.
-- **Project scope**: to commit the plugin to a repo so every team member gets it, add `ui-component-tdd@tomdavis` to `.claude/settings.json` under `plugins` and commit the file.
+- **Project scope**: to commit the plugin to a repo so every team member gets it, add `claudius-guifex@tomdavis` to `.claude/settings.json` under `plugins` and commit the file.
 
 ---
 
 ## 3. Per-repo config
 
 Each repo that uses the plugin must have a config file at
-`.claude/ui-component-tdd.json` in the repo root. `componentsDir`,
+`.claude/claudius-guifex.json` in the repo root. `componentsDir`,
 `tokensStylesheet`, `testCommand`, `typecheckCommand`, and `renderer` are
 always required. `renderer` selects which other keys are required.
+
+> **Breaking change:** this file was previously named
+> `.claude/ui-component-tdd.json`. If you used an earlier version of the
+> plugin, rename your existing config file — there is no fallback to the
+> old name.
+>
+> Upgrading from `ui-component-tdd`: uninstall the old plugin first —
+> `/plugin uninstall ui-component-tdd@tomdavis` — then reinstall under the
+> new name (section 2). Leaving the old plugin installed gives you two
+> copies of every skill and a stale `/ui-tdd` command.
 
 | Key | Purpose |
 |-----|---------|
@@ -81,7 +91,7 @@ always required. `renderer` selects which other keys are required.
 ```
 
 If this file is missing, or any key required by your chosen `renderer` is
-absent, every skill and the `/ui-tdd` command will stop immediately and ask
+absent, every skill and the `/guifex` command will stop immediately and ask
 you to create it before proceeding.
 
 ---
@@ -97,7 +107,7 @@ The plugin does **not** install these — set them up in your repo before using 
 - **[Storybook](https://storybook.js.org/) with [`@storybook/addon-mcp`](https://www.npmjs.com/package/@storybook/addon-mcp)** — the addon exposes the MCP endpoint the fidelity gate uses for structural checks.
 
 **If `renderer: "playwright"`:**
-- **A harness route in your app** — a small dev-only route that renders one component state per URL, so the fidelity gate has a stable target the same way it would have a Storybook preview URL. `/ui-component-tdd:writing-component-playwright-harness` ships a reference template (Vite + react-router-dom) to copy in and adapt to your bundler/router. (You'll need a router configured in your app — the reference template uses react-router-dom.)
+- **A harness route in your app** — a small dev-only route that renders one component state per URL, so the fidelity gate has a stable target the same way it would have a Storybook preview URL. `/claudius-guifex:writing-component-playwright-harness` ships a reference template (Vite + react-router-dom) to copy in and adapt to your bundler/router. (You'll need a router configured in your app — the reference template uses react-router-dom.)
 
 ---
 
@@ -109,13 +119,13 @@ The seven phases run in strict order. Skipping is not allowed.
 
 | # | Phase | What happens |
 |---|-------|-------------|
-| 1 | **AUTHOR** | Create the component folder. Write `<Component>.spec.md` (States table + Gherkin stories via `/ui-component-tdd:writing-component-specs`) and one `mockups/<state>.html` per state (via `/ui-component-tdd:writing-component-mockups`). |
-| 2 | **GATE 1 — design review** | `/ui-component-tdd:reviewing-component-design` dispatches a review subagent, surfaces the verdict, then **stops for your sign-off**. No test or production code may be written until you sign off. |
+| 1 | **AUTHOR** | Create the component folder. Write `<Component>.spec.md` (States table + Gherkin stories via `/claudius-guifex:writing-component-specs`) and one `mockups/<state>.html` per state (via `/claudius-guifex:writing-component-mockups`). |
+| 2 | **GATE 1 — design review** | `/claudius-guifex:reviewing-component-design` dispatches a review subagent, surfaces the verdict, then **stops for your sign-off**. No test or production code may be written until you sign off. |
 | 3 | **RED** | Write `<Component>.test.tsx` with at least one test per state id (`state:<id>`) and one per story id (`US-N:`). Run `testCommand` and confirm the new tests fail. |
 | 4 | **GREEN** | Write minimal `<Component>.tsx`, `<Component>.module.css`, and `index.ts` re-export to pass. Run `testCommand` until green, then run `typecheckCommand`. |
 | 5 | **REFACTOR** | Clean up; stay green. |
-| 6 | **PREVIEW** | `renderer: "storybook"` — write `<Component>.stories.tsx`, one story per state id. `renderer: "playwright"` — write `<Component>.harness.tsx`, one entry per state id (via `/ui-component-tdd:writing-component-playwright-harness`). |
-| 7 | **GATE 2 — fidelity review** | `renderer: "storybook"` — `/ui-component-tdd:fidelity-storybook` starts Storybook, dispatches a structural (Storybook MCP) + visual (Playwright) comparison subagent. `renderer: "playwright"` — `/ui-component-tdd:fidelity-playwright` starts the harness route, dispatches a subagent using Playwright for both structural and visual comparison. Either way: surfaces the per-state table, then **stops for your sign-off**. Not done until you sign off. |
+| 6 | **PREVIEW** | `renderer: "storybook"` — write `<Component>.stories.tsx`, one story per state id. `renderer: "playwright"` — write `<Component>.harness.tsx`, one entry per state id (via `/claudius-guifex:writing-component-playwright-harness`). |
+| 7 | **GATE 2 — fidelity review** | `renderer: "storybook"` — `/claudius-guifex:fidelity-storybook` starts Storybook, dispatches a structural (Storybook MCP) + visual (Playwright) comparison subagent. `renderer: "playwright"` — `/claudius-guifex:fidelity-playwright` starts the harness route, dispatches a subagent using Playwright for both structural and visual comparison. Either way: surfaces the per-state table, then **stops for your sign-off**. Not done until you sign off. |
 
 ### Per-component folder layout
 
@@ -141,13 +151,13 @@ src/components/
 
 | Invocation | Description |
 |-----------|-------------|
-| `/ui-component-tdd:writing-component-specs` | Define every visual state and user interaction with stable ids before implementing anything |
-| `/ui-component-tdd:writing-component-mockups` | Produce a self-contained static HTML design target for each state id |
-| `/ui-component-tdd:reviewing-component-design` | Gate 1: dispatch a design reviewer, surface the verdict, stop for human sign-off |
-| `/ui-component-tdd:writing-component-playwright-harness` | `renderer: "playwright"` only — scaffold the harness route and write a component's fixture file |
-| `/ui-component-tdd:fidelity-storybook` | Gate 2 (`renderer: "storybook"`): compare rendered Storybook stories against mockups (structure + visual), stop for human sign-off |
-| `/ui-component-tdd:fidelity-playwright` | Gate 2 (`renderer: "playwright"`): compare the rendered harness route against mockups (structure + visual, both via Playwright), stop for human sign-off |
-| `/ui-tdd <ComponentName>` | Drive the full seven-phase workflow for one component end-to-end |
+| `/claudius-guifex:writing-component-specs` | Define every visual state and user interaction with stable ids before implementing anything |
+| `/claudius-guifex:writing-component-mockups` | Produce a self-contained static HTML design target for each state id |
+| `/claudius-guifex:reviewing-component-design` | Gate 1: dispatch a design reviewer, surface the verdict, stop for human sign-off |
+| `/claudius-guifex:writing-component-playwright-harness` | `renderer: "playwright"` only — scaffold the harness route and write a component's fixture file |
+| `/claudius-guifex:fidelity-storybook` | Gate 2 (`renderer: "storybook"`): compare rendered Storybook stories against mockups (structure + visual), stop for human sign-off |
+| `/claudius-guifex:fidelity-playwright` | Gate 2 (`renderer: "playwright"`): compare the rendered harness route against mockups (structure + visual, both via Playwright), stop for human sign-off |
+| `/guifex <ComponentName>` | Drive the full seven-phase workflow for one component end-to-end |
 
 ---
 
@@ -160,7 +170,7 @@ Suppose you are building a `ToggleSwitch` component with two states: `on` and `o
 **Step 1 — run the command:**
 
 ```
-/ui-tdd ToggleSwitch
+/guifex ToggleSwitch
 ```
 
 **Step 2 — the spec (`ToggleSwitch.spec.md`) that gets written:**

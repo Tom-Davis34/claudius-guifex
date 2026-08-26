@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-This is the source for the **`ui-component-tdd` Claude Code plugin** — a marketplace-distributed
+This is the source for the **`claudius-guifex` Claude Code plugin** — a marketplace-distributed
 plugin (see `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json`) consisting entirely
 of skill/command Markdown prompts. There is no application code, no package.json, and no
 build/lint/test tooling in this repo itself — everything here is instructions consumed by Claude
@@ -23,7 +23,7 @@ referring to values from the consumer repo's config file.
   plugin.json           # plugin metadata (name, description, keywords)
   marketplace.json       # marketplace entry, points source at "./"
 commands/
-  ui-tdd.md              # /ui-tdd command: orchestrates the 7-phase workflow end-to-end
+  guifex.md              # /guifex command: orchestrates the 7-phase workflow end-to-end
 skills/
   writing-component-specs/               # Phase 1a — spec-template.md
   writing-component-mockups/             # Phase 1b — mockup-template.html
@@ -40,7 +40,7 @@ values before dispatching a subagent.
 ## Architecture: how the pieces fit together
 
 The plugin enforces a **design-first TDD workflow** for React UI components in the *consumer*
-repo, split into 7 ordered phases with 2 hard human sign-off gates. `commands/ui-tdd.md` is the
+repo, split into 7 ordered phases with 2 hard human sign-off gates. `commands/guifex.md` is the
 top-level orchestrator; it calls out to the six skills in order (branching on `renderer` for two of them) and refuses to skip phases:
 
 1. **AUTHOR** — `writing-component-specs` produces `<Component>.spec.md` (a States table with
@@ -71,7 +71,7 @@ SKILL.md's "Red flags" section.
 
 ## The consumer-repo config contract
 
-Every skill and the `/ui-tdd` command independently read `.claude/ui-component-tdd.json` from the
+Every skill and the `/guifex` command independently read `.claude/claudius-guifex.json` from the
 *consumer* repo root as their first step, and hard-stop if it's missing. `componentsDir`,
 `tokensStylesheet`, `testCommand`, `typecheckCommand`, and `renderer` are always required;
 `renderer` (`"storybook"` or `"playwright"`) selects which further keys are required —
@@ -79,7 +79,7 @@ Every skill and the `/ui-tdd` command independently read `.claude/ui-component-t
 `<harnessUrl>` for playwright
 (see README.md section 3 for the full shape). When editing skill files, preserve this
 config-read-first pattern — it's duplicated intentionally across every skill rather than factored
-out, since each skill can be invoked independently of the `/ui-tdd` orchestrator.
+out, since each skill can be invoked independently of the `/guifex` orchestrator.
 
 ## Editing conventions for this repo
 
@@ -88,5 +88,5 @@ out, since each skill can be invoked independently of the `/ui-tdd` orchestrator
 - Placeholders in template files use `{UPPER_SNAKE}` (reviewer prompts) or `{{UPPER_SNAKE}}`
   (mockup-template.html) — keep the existing convention within a given file rather than mixing.
 - Skill names and the command are invoked with the `plugin-name:skill-name` form, e.g.
-  `/ui-component-tdd:writing-component-specs`, `/ui-tdd <ComponentName>` — keep README and SKILL.md
+  `/claudius-guifex:writing-component-specs`, `/guifex <ComponentName>` — keep README and SKILL.md
   cross-references consistent with this naming.

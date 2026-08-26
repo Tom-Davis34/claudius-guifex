@@ -1,8 +1,8 @@
 {
-  "name": "ui-component-tdd",
+  "name": "claudius-guifex",
   "description": "Design-first TDD workflow for UI components: per-state mockups + a Gherkin spec, a design-review gate before coding, and a mockup-vs-render fidelity gate (Storybook or Playwright) before done.",
   "author": { "name": "Tom Davis" },
-  "repository": "https://github.com/Tom-Davis34/ui-component-tdd",
+  "repository": "https://github.com/Tom-Davis34/claudius-guifex",
   "license": "MIT",
   "keywords": ["skills", "tdd", "ui", "react", "storybook", "playwright", "testing", "mockups"]
 }

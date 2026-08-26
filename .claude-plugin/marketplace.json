@@ -4,7 +4,7 @@
   "owner": { "name": "Tom Davis" },
   "plugins": [
     {
-      "name": "ui-component-tdd",
+      "name": "claudius-guifex",
       "source": "./",
       "description": "Design-first TDD workflow for UI components."
     }

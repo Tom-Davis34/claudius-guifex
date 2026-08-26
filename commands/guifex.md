@@ -2,7 +2,7 @@ Drive the design-first UI TDD workflow for a single React component: $ARGUMENTS
 
 ## Configuration
 
-Read `.claude/ui-component-tdd.json` from the repo root before doing anything
+Read `.claude/claudius-guifex.json` from the repo root before doing anything
 else. If it is missing, STOP and ask the user to create it with this shape:
 
 ```json
@@ -30,12 +30,12 @@ the phases in order. The gates are hard stops — the human signs off at each.
 ## Phases
 
 1. **AUTHOR.** Create the component folder
-   `<componentsDir>/<Component>/`. Using the `/ui-component-tdd:writing-component-specs`
+   `<componentsDir>/<Component>/`. Using the `/claudius-guifex:writing-component-specs`
    skill, write `<Component>.spec.md` (States table + Gherkin stories). Using the
-   `/ui-component-tdd:writing-component-mockups` skill, write one `mockups/<state>.html` per state
+   `/claudius-guifex:writing-component-mockups` skill, write one `mockups/<state>.html` per state
    id.
 
-2. **GATE #1 — design review.** Use the `/ui-component-tdd:reviewing-component-design` skill.
+2. **GATE #1 — design review.** Use the `/claudius-guifex:reviewing-component-design` skill.
    Dispatch the design reviewer, surface its verdict, and STOP for the human's
    sign-off. **Write no test or production code until signed off.**
 
@@ -56,15 +56,15 @@ the phases in order. The gates are hard stops — the human signs off at each.
      id. `<testCommand>` runs story play-tests in the Storybook browser
      project — keep it green.
    - `playwright` — using the
-     `/ui-component-tdd:writing-component-playwright-harness` skill,
+     `/claudius-guifex:writing-component-playwright-harness` skill,
      scaffold the project-wide harness route if it doesn't exist yet, then
      write `<Component>.harness.tsx` with one entry per state id.
 
 7. **GATE #2 — fidelity review.** Depends on `<renderer>`:
-   - `storybook` — use the `/ui-component-tdd:fidelity-storybook` skill.
+   - `storybook` — use the `/claudius-guifex:fidelity-storybook` skill.
      Start `<storybookCommand>`, dispatch the fidelity reviewer (structural
      via Storybook MCP + visual via Playwright).
-   - `playwright` — use the `/ui-component-tdd:fidelity-playwright` skill.
+   - `playwright` — use the `/claudius-guifex:fidelity-playwright` skill.
      Start `<harnessCommand>`, dispatch the fidelity reviewer (structural +
      visual, both via Playwright against the harness route).
 
