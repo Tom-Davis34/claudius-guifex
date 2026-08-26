@@ -19,7 +19,7 @@ component after that only needs its own fixture file.
 
 ## Configuration
 
-Read `.claude/ui-component-tdd.json` from the repo root before doing anything
+Read `.claude/claudius-guifex.json` from the repo root before doing anything
 else. If it is missing, STOP and ask the user to create it with this shape:
 
 ```json
