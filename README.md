@@ -42,6 +42,11 @@ always required. `renderer` selects which other keys are required.
 > `.claude/ui-component-tdd.json`. If you used an earlier version of the
 > plugin, rename your existing config file — there is no fallback to the
 > old name.
+>
+> Upgrading from `ui-component-tdd`: uninstall the old plugin first —
+> `/plugin uninstall ui-component-tdd@tomdavis` — then reinstall under the
+> new name (section 2). Leaving the old plugin installed gives you two
+> copies of every skill and a stale `/ui-tdd` command.
 
 | Key | Purpose |
 |-----|---------|
