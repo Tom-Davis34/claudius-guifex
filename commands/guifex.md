@@ -35,6 +35,9 @@ the phases in order. The gates are hard stops — the human signs off at each.
    `/claudius-guifex:writing-component-mockups` skill, write one `mockups/<state>.html` per state
    id.
 
+   The spec's `## Responsive` section and fluid mockups are part of AUTHOR —
+   not optional extras.
+
 2. **GATE #1 — design review.** Use the `/claudius-guifex:reviewing-component-design` skill.
    Dispatch the design reviewer, surface its verdict, and STOP for the human's
    sign-off. **Write no test or production code until signed off.**
@@ -45,9 +48,22 @@ the phases in order. The gates are hard stops — the human signs off at each.
    verify the count: every States-table id and every `US-N` has a matching test.
    Run `<testCommand>` and watch the new tests FAIL.
 
+   Do not write responsive/viewport tests here — jsdom cannot do layout, so
+   they would assert class names, not behaviour. Responsiveness is verified
+   at both gates, where rendering is real.
+
 4. **GREEN.** Write the minimal `<Component>.tsx` (+ `<Component>.module.css`,
    `index.ts` re-export) to pass. Run `<testCommand>` until green. Run
    `<typecheckCommand>`.
+
+   **Responsive Iron Law** — the mockup is fluid; the component must be too:
+   - Mobile-first: author the narrow layout, widen with `min-width` queries.
+   - No fixed px widths/heights on layout containers; `max-width`, `%`,
+     `clamp()`, `minmax()`.
+   - `flex-wrap` on any row that can get tight; `min-width: 0` on flex
+     children holding text.
+   - `img`/`video`: `max-width: 100%`, `height: auto`.
+   - Never absolute positioning for layout.
 
 5. **REFACTOR.** Clean up; stay green.
 
@@ -68,7 +84,7 @@ the phases in order. The gates are hard stops — the human signs off at each.
      Start `<harnessCommand>`, dispatch the fidelity reviewer (structural +
      visual, both via Playwright against the harness route).
 
-   Either way: surface the per-state table, and STOP for the human's
+   Either way: surface the per-state `structure | visual | responsive` table (each state compared at widths 320/768/1280 with an element-level overflow sweep), and STOP for the human's
    sign-off. Fix the component on mismatch. **Not done until signed off.**
 
 ## Rules
@@ -76,3 +92,5 @@ the phases in order. The gates are hard stops — the human signs off at each.
   them; add `index.ts` re-export so imports stay `components/<Component>`.
 - Run everything through the project's configured commands, never raw npm/npx.
 - Both gates: the subagent advises, the human signs off. Never auto-proceed.
+- "Looks perfect at one width" is not done. Gate 2 checks 320/768/1280; a
+  fixed-width component will mismatch its fluid mockup as width grows.
