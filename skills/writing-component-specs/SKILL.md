@@ -43,7 +43,7 @@ from that file.
 
 ## The artifact: `<Component>.spec.md`
 
-Copy spec-template.md and fill it in. Two sections, nothing else.
+Copy spec-template.md and fill it in. Three sections, nothing else.
 
 ### States table
 
