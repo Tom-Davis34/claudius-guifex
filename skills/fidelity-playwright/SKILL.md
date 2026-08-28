@@ -55,7 +55,7 @@ NOT DONE UNTIL THIS GATE IS SIGNED OFF.
    `<harnessUrl>/__harness/<Component>/<state-id>`). Wait until
    `curl --fail <harnessUrl>/__harness/<Component>/<any-state-id>` succeeds.
 3. Dispatch a `general-purpose` subagent, filling fidelity-reviewer.md with
-   `{COMPONENT}`, `{MOCKUPS_DIR}`, `{HARNESS_URL}`.
+   `{COMPONENT}`, `{SPEC_PATH}`, `{MOCKUPS_DIR}`, `{HARNESS_URL}`.
 4. Surface the per-state table verbatim.
 5. **STOP. Ask the human to sign off.** The subagent advises; the human
    decides.

@@ -55,7 +55,7 @@ NOT DONE UNTIL THIS GATE IS SIGNED OFF.
    `POST <storybookMcpUrl>`). Wait until
    `curl --fail <storybookUrl>/index.json` succeeds.
 3. Dispatch a `general-purpose` subagent, filling fidelity-reviewer.md with the
-   component, story title, mockups dir, Storybook URL, and MCP URL.
+   component, spec path, story title, mockups dir, Storybook URL, and MCP URL.
 4. Surface the per-state table verbatim.
 5. **STOP. Ask the human to sign off.** The subagent advises; the human decides.
 6. `mismatch` → fix the **component** (not the mockup, unless the human rules the
