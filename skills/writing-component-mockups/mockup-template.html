@@ -8,7 +8,10 @@
   <title><Component> — <state-id></title>
   <style>
     /* Layout for THIS state only. Use the CSS variables from your tokens
-       stylesheet (e.g. var(--color-bg), var(--space-2)). No JS. */
+       stylesheet (e.g. var(--color-bg), var(--space-2)). No JS.
+       Fluid CSS only: no fixed px widths/heights on layout containers —
+       max-width/%/clamp()/minmax(), flex-wrap where rows can get tight.
+       Must satisfy the spec's Responsive invariants at 320/768/1280. */
   </style>
 </head>
 <body>

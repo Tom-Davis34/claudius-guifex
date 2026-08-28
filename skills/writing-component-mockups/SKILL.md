@@ -54,6 +54,14 @@ from that file.
 - **Semantic HTML.** Use the real roles, labels, and text the component must
   render (`<button>`, `<input type="checkbox">`, a `role="alert"` for errors) —
   the structural half of the fidelity gate compares against these.
+- **Fluid, not fixed.** No fixed px widths/heights on layout containers — use
+  `max-width`, `%`, `clamp()`, `minmax()`. Flex/grid for layout; `flex-wrap`
+  on any row that can get tight; never absolute positioning for layout.
+  `img, video { max-width: 100%; height: auto }`.
+- **The mockup satisfies the spec's Responsive invariants.** It is the design
+  target — the target must be responsive first. Gate 1 opens every mockup at
+  320/768/1280 and rejects overflow. Media/container queries are allowed when
+  a spec threshold needs one.
 
 ## Quick reference
 
@@ -64,6 +72,8 @@ from that file.
 | Module CSS | never |
 | JS | never |
 | States per file | exactly one |
+| Layout widths | fluid (`max-width`/`%`/`clamp()`), never fixed px |
+| Checked at | 320 / 768 / 1280 by Gate 1 |
 
 ## Common mistakes
 
@@ -73,5 +83,9 @@ from that file.
 - **Several states in one file.** Split — the fidelity gate pairs one file to
   one story by id.
 - **Adding interactivity.** No JS; show the end state directly in markup.
+- **Copying fixed geometry from a screenshot.** A 390px-wide container that
+  matches the phone design pixel-perfect breaks at every other width.
+- **Mockup only looks right at one width.** Resize before calling it done —
+  Gate 1 will open it at 320, 768, and 1280.
 
 See mockup-template.html for the copyable skeleton.
