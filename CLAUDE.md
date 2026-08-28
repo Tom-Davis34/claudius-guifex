@@ -46,10 +46,11 @@ top-level orchestrator; it calls out to the six skills in order (branching on `r
 1. **AUTHOR** — `writing-component-specs` produces `<Component>.spec.md` (a States table with
    stable kebab-case ids + Gherkin `US-N` stories); `writing-component-mockups` produces one
    self-contained `mockups/<state-id>.html` per state (linking the consumer repo's tokens
-   stylesheet, no JS, no component/module-CSS imports).
+   stylesheet, no JS, no component/module-CSS imports), fluid CSS satisfying the spec's
+   `## Responsive` invariants.
 2. **GATE 1 (design review)** — `reviewing-component-design` dispatches a `general-purpose`
    subagent using `design-reviewer.md` as the prompt template (filled with `{COMPONENT}`,
-   `{SPEC_PATH}`, `{MOCKUPS_DIR}`), surfaces its PASS/GAPS verdict, then **stops for human
+   `{SPEC_PATH}`, `{MOCKUPS_DIR}`), surfaces its PASS/GAPS verdict (including a responsive audit: mockups opened at 320/768/1280 with an overflow sweep), then **stops for human
    sign-off**. No test or production code may exist before this gate passes.
 3. **RED → GREEN → REFACTOR** — standard TDD (delegates to `superpowers:test-driven-development`),
    except every state id and story id must map to a named test (`state:<id>`, `US-N:`).
@@ -61,8 +62,9 @@ top-level orchestrator; it calls out to the six skills in order (branching on `r
    and its subagent drives Playwright directly against a dev-only harness route
    (`<harnessUrl>/__harness/<Component>/<state-id>`, scaffolded once per project by
    `writing-component-playwright-harness`) for both structural and visual comparison — no
-   MCP endpoint needed. Either way, the subagent surfaces a per-state `structure | visual`
-   table, then **stops for human sign-off**.
+   MCP endpoint needed. Either way, the subagent surfaces a per-state
+   `structure | visual | responsive` table (compared at widths 320/768/1280),
+   then **stops for human sign-off**.
 
 Key invariant threaded through every skill: **the subagent advises, the human decides.** A skill
 that treats a subagent's PASS/MATCH verdict as sufficient to proceed is violating the design —

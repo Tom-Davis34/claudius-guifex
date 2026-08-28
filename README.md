@@ -101,7 +101,7 @@ you to create it before proceeding.
 The plugin does **not** install these — set them up in your repo before using the plugin:
 
 - **[Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)** — for the unit/interaction tests written in the RED phase.
-- **[Playwright](https://playwright.dev/)** — used by the fidelity reviewer for visual comparison against mockups on both renderers, and for structural checks too when `renderer: "playwright"`.
+- **[Playwright](https://playwright.dev/)** — used by the Gate 1 design reviewer to open mockups at 320/768/1280 and sweep for overflow, and by the fidelity reviewer for visual comparison against mockups on both renderers (plus structural checks too when `renderer: "playwright"`).
 
 **If `renderer: "storybook"`:**
 - **[Storybook](https://storybook.js.org/) with [`@storybook/addon-mcp`](https://www.npmjs.com/package/@storybook/addon-mcp)** — the addon exposes the MCP endpoint the fidelity gate uses for structural checks.
@@ -120,12 +120,29 @@ The seven phases run in strict order. Skipping is not allowed.
 | # | Phase | What happens |
 |---|-------|-------------|
 | 1 | **AUTHOR** | Create the component folder. Write `<Component>.spec.md` (States table + Gherkin stories via `/claudius-guifex:writing-component-specs`) and one `mockups/<state>.html` per state (via `/claudius-guifex:writing-component-mockups`). |
-| 2 | **GATE 1 — design review** | `/claudius-guifex:reviewing-component-design` dispatches a review subagent, surfaces the verdict, then **stops for your sign-off**. No test or production code may be written until you sign off. |
+| 2 | **GATE 1 — design review** | `/claudius-guifex:reviewing-component-design` dispatches a review subagent, checks mockups at 320/768/1280, surfaces the verdict, then **stops for your sign-off**. No test or production code may be written until you sign off. |
 | 3 | **RED** | Write `<Component>.test.tsx` with at least one test per state id (`state:<id>`) and one per story id (`US-N:`). Run `testCommand` and confirm the new tests fail. |
-| 4 | **GREEN** | Write minimal `<Component>.tsx`, `<Component>.module.css`, and `index.ts` re-export to pass. Run `testCommand` until green, then run `typecheckCommand`. |
+| 4 | **GREEN** | Write minimal `<Component>.tsx`, `<Component>.module.css`, and `index.ts` re-export to pass. Run `testCommand` until green, then run `typecheckCommand`. Fluid CSS only — the Responsive Iron Law in the command. |
 | 5 | **REFACTOR** | Clean up; stay green. |
 | 6 | **PREVIEW** | `renderer: "storybook"` — write `<Component>.stories.tsx`, one story per state id. `renderer: "playwright"` — write `<Component>.harness.tsx`, one entry per state id (via `/claudius-guifex:writing-component-playwright-harness`). |
-| 7 | **GATE 2 — fidelity review** | `renderer: "storybook"` — `/claudius-guifex:fidelity-storybook` starts Storybook, dispatches a structural (Storybook MCP) + visual (Playwright) comparison subagent. `renderer: "playwright"` — `/claudius-guifex:fidelity-playwright` starts the harness route, dispatches a subagent using Playwright for both structural and visual comparison. Either way: surfaces the per-state table, then **stops for your sign-off**. Not done until you sign off. |
+| 7 | **GATE 2 — fidelity review** | `renderer: "storybook"` — `/claudius-guifex:fidelity-storybook` starts Storybook, dispatches a structural (Storybook MCP) + visual (Playwright) comparison subagent. `renderer: "playwright"` — `/claudius-guifex:fidelity-playwright` starts the harness route, dispatches a subagent using Playwright for both structural and visual comparison. Either way: surfaces the per-state `structure \| visual \| responsive` table (each state at 320/768/1280), then **stops for your sign-off**. Not done until you sign off. |
+
+### Responsive by default
+
+Specs carry a `## Responsive` section: invariants that hold at **every**
+width, plus per-component thresholds — not a breakpoint matrix.
+
+Universal invariants (pre-filled in the template):
+
+- No horizontal overflow at any width >= 320px
+- Images/media never exceed their container
+- Text truncates or wraps; never clips or overlaps
+
+Mockups must be fluid (no fixed px layout widths) and satisfy the invariants
+themselves. Both gates check at three sample widths — **320 / 768 / 1280** —
+with an element-level overflow sweep; Gate 2 compares implementation to
+mockup at each width, so a fixed-width component fails against its fluid
+mockup automatically.
 
 ### Per-component folder layout
 

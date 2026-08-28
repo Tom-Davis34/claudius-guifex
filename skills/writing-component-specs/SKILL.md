@@ -43,7 +43,7 @@ from that file.
 
 ## The artifact: `<Component>.spec.md`
 
-Copy spec-template.md and fill it in. Two sections, nothing else.
+Copy spec-template.md and fill it in. Three sections, nothing else.
 
 ### States table
 
@@ -66,6 +66,19 @@ or sharpen it.
 Cover the **error and edge** interactions, not just the happy path: empty
 submit, invalid input, the action while `disabled`, cancel/escape.
 
+### Responsive
+
+Invariants are rules that hold at **every** width, not layouts at specific
+widths. The template pre-fills three universal invariants — keep them; delete
+one only with a stated reason in its place. Add component-specific
+**thresholds** where behaviour changes: "action row wraps when container
+< 480px", "sidebar hides below 600px". A threshold is one number and one
+behaviour flip, not a separate layout design.
+
+Gate 1 checks the section exists and that every mockup honours it at
+320/768/1280. Gate 2 verifies the implementation against it at the same
+widths.
+
 ## Quick reference
 
 | Rule | Why |
@@ -74,6 +87,7 @@ submit, invalid input, the action while `disabled`, cancel/escape.
 | Every interaction is one story | One story → one test |
 | `Then` = one observable outcome | Keeps the test unambiguous |
 | List loading/empty/error/disabled | The states agents forget |
+| Responsive section present | Gate 1 rejects a spec silent on width behaviour |
 
 ## Common mistakes
 
@@ -85,5 +99,8 @@ submit, invalid input, the action while `disabled`, cancel/escape.
   state or story.
 - **Multiple outcomes crammed into one Then.** Split into `And` lines or
   separate stories.
+- **Silent on responsive behaviour.** No Responsive section, or universal
+  invariants deleted without reason. Gate 1 rejects this — components that
+  only work at one width are the plugin's most common failure.
 
 See spec-template.md for the copyable skeleton.
