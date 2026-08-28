@@ -125,7 +125,7 @@ The seven phases run in strict order. Skipping is not allowed.
 | 4 | **GREEN** | Write minimal `<Component>.tsx`, `<Component>.module.css`, and `index.ts` re-export to pass. Run `testCommand` until green, then run `typecheckCommand`. Fluid CSS only — the Responsive Iron Law in the command. |
 | 5 | **REFACTOR** | Clean up; stay green. |
 | 6 | **PREVIEW** | `renderer: "storybook"` — write `<Component>.stories.tsx`, one story per state id. `renderer: "playwright"` — write `<Component>.harness.tsx`, one entry per state id (via `/claudius-guifex:writing-component-playwright-harness`). |
-| 7 | **GATE 2 — fidelity review** | `renderer: "storybook"` — `/claudius-guifex:fidelity-storybook` starts Storybook, dispatches a structural (Storybook MCP) + visual (Playwright) comparison subagent. `renderer: "playwright"` — `/claudius-guifex:fidelity-playwright` starts the harness route, dispatches a subagent using Playwright for both structural and visual comparison. Either way: surfaces the per-state `structure | visual | responsive` table (each state at 320/768/1280), then **stops for your sign-off**. Not done until you sign off. |
+| 7 | **GATE 2 — fidelity review** | `renderer: "storybook"` — `/claudius-guifex:fidelity-storybook` starts Storybook, dispatches a structural (Storybook MCP) + visual (Playwright) comparison subagent. `renderer: "playwright"` — `/claudius-guifex:fidelity-playwright` starts the harness route, dispatches a subagent using Playwright for both structural and visual comparison. Either way: surfaces the per-state `structure \| visual \| responsive` table (each state at 320/768/1280), then **stops for your sign-off**. Not done until you sign off. |
 
 ### Responsive by default
 
