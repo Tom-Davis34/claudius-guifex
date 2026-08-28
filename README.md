@@ -122,10 +122,8 @@ flowchart TD
     SR1 -- "verdict: PASS or GAPS<br/>(advisory only)" --> G1{"2 GATE 1<br/>human sign-off"}
     G1 -- "gaps: revise, re-dispatch reviewer" --> A
     G1 -- "signed off" --> R
-    subgraph TDD ["superpowers:test-driven-development"]
-        R["3 RED<br/>failing tests per state/story id"] --> G["4 GREEN<br/>minimal implementation"]
-        G --> RF["5 REFACTOR<br/>stay green"]
-    end
+    R["3 RED<br/>failing tests per state/story id"] --> G["4 GREEN<br/>minimal implementation"]
+    G --> RF["5 REFACTOR<br/>stay green"]
     RF --> P["6 PREVIEW<br/>storybook: stories per state<br/>playwright: harness fixtures per state"]
     P --> SR2[["fidelity review subagent<br/>independent: compares rendered states<br/>to mockups, never session history<br/>structure / visual / responsive at 320/768/1280"]]
     SR2 -- "per-state MATCH/MISMATCH table<br/>(advisory only)" --> G2{"7 GATE 2<br/>human sign-off"}
@@ -134,10 +132,7 @@ flowchart TD
 ```
 
 Both gates are hard stops: a subagent reviews and advises, but only explicit
-human sign-off moves the workflow forward. The RED → GREEN → REFACTOR loop
-runs via the [superpowers](https://github.com/obra/superpowers) plugin's
-`superpowers:test-driven-development` skill, which this plugin extends with
-the two gates.
+human sign-off moves the workflow forward.
 
 ### Phases
 
