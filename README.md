@@ -101,7 +101,7 @@ you to create it before proceeding.
 The plugin does **not** install these — set them up in your repo before using the plugin:
 
 - **[Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)** — for the unit/interaction tests written in the RED phase.
-- **[Playwright](https://playwright.dev/)** — used by the fidelity reviewer for visual comparison against mockups on both renderers, and for structural checks too when `renderer: "playwright"`.
+- **[Playwright](https://playwright.dev/)** — used by the Gate 1 design reviewer to open mockups at 320/768/1280 and sweep for overflow, and by the fidelity reviewer for visual comparison against mockups on both renderers (plus structural checks too when `renderer: "playwright"`).
 
 **If `renderer: "storybook"`:**
 - **[Storybook](https://storybook.js.org/) with [`@storybook/addon-mcp`](https://www.npmjs.com/package/@storybook/addon-mcp)** — the addon exposes the MCP endpoint the fidelity gate uses for structural checks.

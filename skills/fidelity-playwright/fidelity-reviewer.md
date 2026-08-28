@@ -14,7 +14,8 @@ Pair `mockups/<id>.html` with `{HARNESS_URL}/__harness/{COMPONENT}/<id>`.
 1. Structural — navigate to the harness URL for this state. Use Playwright's
    accessibility snapshot / role and text locators (no MCP endpoint needed
    here). Compare roles, accessible names, visible text, and key elements
-   against the mockup's DOM. Run once — structure does not vary by width.
+   against the mockup's DOM. Run once at the default width — width-driven
+   show/hide is covered by the threshold checks in step 2.
 2. Responsive — for each viewport 320x844, 768x844, 1280x844: resize, then on
    BOTH the harness URL and the mockup (`file://` path) run:
    `[...document.querySelectorAll('*')].filter(el => el.scrollWidth > el.clientWidth)`
@@ -30,6 +31,8 @@ Pair `mockups/<id>.html` with `{HARNESS_URL}/__harness/{COMPONENT}/<id>`.
 ## Output (exactly this shape)
 A table: `| state | structure | visual | responsive | notes |` where
 structure/visual ∈ {match, mismatch} (visual = worst across the three
-widths), responsive ∈ {pass, overflow}, and notes give the specific drift or
-overflow (element + width + px overage) + an evidence path (screenshot file
-or DOM delta). End with `VERDICT: MATCH | MISMATCH`.
+widths), responsive ∈ {pass, fail}, and notes name the failure kind —
+overflow (element + width + px overage) or threshold (which threshold
+failed to flip) — plus an evidence path (screenshot file or DOM delta).
+Any responsive `fail` forces `VERDICT: MISMATCH`. End with
+`VERDICT: MATCH | MISMATCH`.

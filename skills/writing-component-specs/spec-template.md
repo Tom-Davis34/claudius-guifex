@@ -18,5 +18,5 @@ And <optional second observable outcome>
 - No horizontal overflow at any width >= 320px
 - Images/media never exceed their container
 - Text truncates or wraps; never clips or overlaps
-<!-- Component-specific thresholds — add yours, or delete this line -->
+<!-- Component-specific thresholds — add yours, or delete this comment and the example below -->
 - <e.g. action row wraps when container < 480px>

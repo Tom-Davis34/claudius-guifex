@@ -84,8 +84,10 @@ the phases in order. The gates are hard stops — the human signs off at each.
      Start `<harnessCommand>`, dispatch the fidelity reviewer (structural +
      visual, both via Playwright against the harness route).
 
-   Either way: surface the per-state `structure | visual | responsive` table (each state compared at widths 320/768/1280 with an element-level overflow sweep), and STOP for the human's
-   sign-off. Fix the component on mismatch. **Not done until signed off.**
+   Either way: surface the per-state `structure | visual | responsive` table
+   (each state compared at widths 320/768/1280 with an element-level
+   overflow sweep), and STOP for the human's sign-off. Fix the component on
+   mismatch or responsive failure. **Not done until signed off.**
 
 ## Rules
 - Existing flat components: migrate into the folder only when running this on
