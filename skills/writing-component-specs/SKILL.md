@@ -75,9 +75,10 @@ one only with a stated reason in its place. Add component-specific
 < 480px", "sidebar hides below 600px". A threshold is one number and one
 behaviour flip, not a separate layout design.
 
-Gate 1 checks the section exists and that every mockup honours it at
-320/768/1280. Gate 2 verifies the implementation against it at the same
-widths.
+Gate 1 checks the section exists and that every mockup honours it — at
+widths the reviewer chooses and reports. Gate 2 verifies the implementation
+against it the same way. Invariants must hold at every width, so no fixed
+width list is safe to design against.
 
 ## Quick reference
 

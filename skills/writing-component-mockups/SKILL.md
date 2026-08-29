@@ -59,9 +59,10 @@ from that file.
   on any row that can get tight; never absolute positioning for layout.
   `img, video { max-width: 100%; height: auto }`.
 - **The mockup satisfies the spec's Responsive invariants.** It is the design
-  target — the target must be responsive first. Gate 1 opens every mockup at
-  320/768/1280 and rejects overflow. Media/container queries are allowed when
-  a spec threshold needs one.
+  target — the target must be responsive first. Gate 1's reviewer opens every
+  mockup at widths of its own choosing and rejects overflow — fluid CSS must
+  hold everywhere, not at three magic widths. Media/container queries are
+  allowed when a spec threshold needs one.
 
 ## Quick reference
 
@@ -73,7 +74,7 @@ from that file.
 | JS | never |
 | States per file | exactly one |
 | Layout widths | fluid (`max-width`/`%`/`clamp()`), never fixed px |
-| Checked at | 320 / 768 / 1280 by Gate 1 |
+| Checked at | reviewer-chosen widths, Gate 1 |
 
 ## Common mistakes
 
@@ -86,6 +87,7 @@ from that file.
 - **Copying fixed geometry from a screenshot.** A 390px-wide container that
   matches the phone design pixel-perfect breaks at every other width.
 - **Mockup only looks right at one width.** Resize before calling it done —
-  Gate 1 will open it at 320, 768, and 1280.
+  Gate 1's reviewer picks its own widths, and it picks the ones likely to
+  break you.
 
 See mockup-template.html for the copyable skeleton.
