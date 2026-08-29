@@ -21,15 +21,21 @@ Read the spec and every mockup file, then check:
 5. Responsive — the spec has a `## Responsive` section containing the three
    universal invariants (no horizontal overflow >= 320px; media never exceeds
    container; text truncates/wraps, never clips). Flag any invariant deleted
-   without a stated reason. Then open each mockup file with Playwright
-   (`file://` path) at viewports 320x844, 768x844, and 1280x844 and run:
+   without a stated reason. Then verify every mockup honours those invariants
+   and the spec's thresholds. HOW you verify is your call: choose the
+   viewport widths (and how many) where THIS component's layout is most
+   likely to break — near its thresholds, at the >= 320px floor, wherever the
+   CSS makes you suspicious — and choose your method. Techniques available to
+   you (use any, none are mandatory): open the mockup with Playwright
+   (`file://` path) at a chosen viewport; run an overflow sweep
    `[...document.querySelectorAll('*')].filter(el => el.scrollWidth > el.clientWidth)`
-   Flag every hit: file, width, element, and px overage
-   (`scrollWidth - clientWidth`). Also flag fixed px widths/heights on layout
-   containers in the mockup CSS — fluid values (`max-width`, `%`, `clamp()`,
-   `minmax()`) are the rule.
+   and record element + px overage; inspect the mockup CSS for fixed px
+   widths/heights on layout containers — fluid values (`max-width`, `%`,
+   `clamp()`, `minmax()`) are the rule. A check at a single width proves
+   nothing about the others — justify your coverage.
 
 ## Output (exactly this shape, no preamble, do not restate the spec)
+Responsive check: <widths tested> — <method used> — <one-line why those>
 VERDICT: PASS | GAPS
 If GAPS: a numbered list. Each item: `[category] <file-or-story-id> — what is
 missing/ambiguous — what to add`.
