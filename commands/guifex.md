@@ -39,7 +39,7 @@ the phases in order. The gates are hard stops — the human signs off at each.
    not optional extras.
 
 2. **GATE #1 — design review.** Use the `/claudius-guifex:reviewing-component-design` skill.
-   Dispatch the design reviewer, surface its verdict, and STOP for the human's
+   Dispatch the design reviewer, surface its verdict, including its `Responsive check:` line (which widths it tested, how, and why — judge whether its coverage was enough), and STOP for the human's
    sign-off. **Write no test or production code until signed off.**
 
 3. **RED.** Using superpowers:test-driven-development, write

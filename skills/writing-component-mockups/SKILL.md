@@ -59,7 +59,7 @@ from that file.
   on any row that can get tight; never absolute positioning for layout.
   `img, video { max-width: 100%; height: auto }`.
 - **The mockup satisfies the spec's Responsive invariants.** It is the design
-  target — the target must be responsive first. Gate 1's reviewer opens every
+  target — the target must be responsive first. Gate 1's reviewer verifies every
   mockup at widths of its own choosing and rejects overflow — fluid CSS must
   hold everywhere, not at three magic widths. Media/container queries are
   allowed when a spec threshold needs one.
