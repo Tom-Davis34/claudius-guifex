@@ -50,8 +50,9 @@ top-level orchestrator; it calls out to the six skills in order (branching on `r
    `## Responsive` invariants.
 2. **GATE 1 (design review)** — `reviewing-component-design` dispatches a `general-purpose`
    subagent using `design-reviewer.md` as the prompt template (filled with `{COMPONENT}`,
-   `{SPEC_PATH}`, `{MOCKUPS_DIR}`), surfaces its PASS/GAPS verdict (including a responsive audit: mockups opened at 320/768/1280 with an overflow sweep), then **stops for human
-   sign-off**. No test or production code may exist before this gate passes.
+   `{SPEC_PATH}`, `{MOCKUPS_DIR}`), surfaces its PASS/GAPS verdict (including a responsive
+   audit at reviewer-chosen widths, reported in the verdict), then **stops for human sign-off**.
+   No test or production code may exist before this gate passes.
 3. **RED → GREEN → REFACTOR** — standard TDD (delegates to `superpowers:test-driven-development`),
    except every state id and story id must map to a named test (`state:<id>`, `US-N:`).
 4. **PREVIEW** — depends on the `renderer` config key. `renderer: "storybook"` writes one Storybook story per state id. `renderer: "playwright"` writes one `<Component>.harness.tsx` fixture entry per state id via `writing-component-playwright-harness` (see phase 5 below for the harness route it depends on).
@@ -63,7 +64,7 @@ top-level orchestrator; it calls out to the six skills in order (branching on `r
    (`<harnessUrl>/__harness/<Component>/<state-id>`, scaffolded once per project by
    `writing-component-playwright-harness`) for both structural and visual comparison — no
    MCP endpoint needed. Either way, the subagent surfaces a per-state
-   `structure | visual | responsive` table (compared at widths 320/768/1280),
+   `structure | visual | responsive` table (at reviewer-chosen widths, reported in the verdict),
    then **stops for human sign-off**.
 
 Key invariant threaded through every skill: **the subagent advises, the human decides.** A skill
