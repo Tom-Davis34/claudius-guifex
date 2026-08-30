@@ -39,7 +39,7 @@ the phases in order. The gates are hard stops — the human signs off at each.
    not optional extras.
 
 2. **GATE #1 — design review.** Use the `/claudius-guifex:reviewing-component-design` skill.
-   Dispatch the design reviewer, surface its verdict, and STOP for the human's
+   Dispatch the design reviewer, surface its verdict, including its `Responsive check:` line (which widths it tested, how, and why — judge whether its coverage was enough), and STOP for the human's
    sign-off. **Write no test or production code until signed off.**
 
 3. **RED.** Using superpowers:test-driven-development, write
@@ -85,8 +85,9 @@ the phases in order. The gates are hard stops — the human signs off at each.
      visual, both via Playwright against the harness route).
 
    Either way: surface the per-state `structure | visual | responsive` table
-   (each state compared at widths 320/768/1280 with an element-level
-   overflow sweep), and STOP for the human's sign-off. Fix the component on
+   AND the reviewer's `Responsive check:` line (which widths it tested, how,
+   and why — the reviewer chooses these; judge whether its coverage was
+   enough), and STOP for the human's sign-off. Fix the component on
    mismatch or responsive failure. **Not done until signed off.**
 
 ## Rules
@@ -94,5 +95,6 @@ the phases in order. The gates are hard stops — the human signs off at each.
   them; add `index.ts` re-export so imports stay `components/<Component>`.
 - Run everything through the project's configured commands, never raw npm/npx.
 - Both gates: the subagent advises, the human signs off. Never auto-proceed.
-- "Looks perfect at one width" is not done. Gate 2 checks 320/768/1280; a
-  fixed-width component will mismatch its fluid mockup as width grows.
+- "Looks perfect at one width" is not done. Gate 2's reviewer picks the
+  widths where the layout is most likely to break; a fixed-width component
+  will mismatch its fluid mockup as width grows.
