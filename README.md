@@ -249,3 +249,5 @@ After Gate 1 sign-off, tests are written from the spec ids (`state:off`, `state:
 ## License
 
 MIT
+
+ARCHIVED: this plugin moved to https://github.com/Tom-Davis34/claudius (flattened history).
